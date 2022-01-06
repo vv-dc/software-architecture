@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2020",
+    "strict": true,
+    "noImplicitAny": true,
+    "declaration": true,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "sourceMap": true
+  }
+}

@@ -2,5 +2,10 @@
   "name": "shared",
   "version": "1.0.0",
   "private": true,
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "fastify": "^3.24.0",
+    "knex": "^0.95.14"
+  }
 }

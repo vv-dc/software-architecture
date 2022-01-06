@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres:alpine3.14
+    container_name: architecture-db
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - MAIN_PG_USER
+      - MAIN_PG_DATABASE
+      - MAIN_PG_PASSWORD
+      - FIRST_PG_USER
+      - FIRST_PG_DATABASE
+      - FIRST_PG_PASSWORD
+      - SECOND_PG_USER
+      - SECOND_PG_DATABASE
+      - SECOND_PG_PASSWORD
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./init-sources.sh:/docker-entrypoint-initdb.d/init-sources.sh
+    networks:
+      - local
+
+volumes:
+  pg_data:
+
+networks:
+  local:
+    name: architecture-local
+    external: false

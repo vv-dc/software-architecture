@@ -4,6 +4,12 @@
   "private": true,
   "author": "vvkin <vkincur@gmail.com>, ShkarupaDC <dimon.shkarupa@gmail.com>",
   "license": "MIT",
+  "workspaces": [
+    "main",
+    "first",
+    "second",
+    "shared"
+  ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",

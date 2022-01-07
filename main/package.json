@@ -16,18 +16,24 @@
     "migrate:down": "knex migrate:down",
     "migrate:down-all": "knex migrate:rollback --all",
     "seed:run": "knex seed:run",
-    "seed:make": "knex seed:make"
+    "seed:make": "knex seed:make",
+    "compile-schemas": "json2ts --cwd src/schema --bannerComment \"\" -i src/schema -o src/model && yarn lint:fix"
   },
   "devDependencies": {
     "@types/node": "^16.11.6",
-    "@types/pg": "^8.6.1"
+    "@types/pg": "^8.6.1",
+    "json-schema-to-typescript": "^10.1.5"
   },
   "dependencies": {
+    "@types/node-cron": "^3.0.0",
     "dotenv": "^10.0.0",
     "fastify": "^3.23.0",
     "fastify-autoload": "^3.9.0",
     "fastify-plugin": "^3.0.0",
-    "knex": "^0.95.15",
-    "pg": "^8.7.1"
+    "knex": "^0.95.14",
+    "node-cron": "^3.0.0",
+    "pg": "^8.7.1",
+    "qs": "^6.10.1",
+    "undici": "^4.10.2"
   }
 }

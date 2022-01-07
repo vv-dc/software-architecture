@@ -1,24 +1,26 @@
-import { STATUS_CODES } from 'http';
-
 export class HttpError extends Error {
   public statusCode: number;
-  public error: string;
+  public data: unknown | undefined;
 
-  constructor(message = 'Internal Server Error', statusCode = 500) {
+  constructor(
+    message = 'Internal Server Error',
+    statusCode = 500,
+    data?: unknown
+  ) {
     super(message);
     this.statusCode = statusCode;
-    this.error = STATUS_CODES[statusCode] ?? message;
+    this.data = data;
   }
 }
 
 export class HttpNotFound extends HttpError {
-  constructor(message: string) {
-    super(message, 404);
+  constructor(message: string, data?: unknown) {
+    super(message, 404, data);
   }
 }
 
 export class HttpConflict extends HttpError {
-  constructor(message: string) {
-    super(message, 409);
+  constructor(message: string, data?: unknown) {
+    super(message, 409, data);
   }
 }

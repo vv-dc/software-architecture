@@ -1,6 +1,6 @@
 export interface PriceListItem {
   id: number;
-  externalName?: string;
+  externalName: string;
   name: string;
   price: number;
 }

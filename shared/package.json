@@ -6,6 +6,8 @@
   "dependencies": {},
   "devDependencies": {
     "fastify": "^3.24.0",
-    "knex": "^0.95.14"
+    "knex": "^0.95.14",
+    "qs": "^6.10.2",
+    "undici": "^4.12.1"
   }
 }

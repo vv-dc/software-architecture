@@ -1,0 +1,14 @@
+{
+  "$id": "domain/number-query.json",
+  "type": "object",
+  "properties": {
+    "includes": {
+      "type": "array",
+      "items": { "type": "number" },
+      "uniqueItems": true
+    },
+    "min": { "type": "number", "minimum": 0 },
+    "max": { "type": "number", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,14 @@
+{
+  "$id": "dto/price-list.json",
+  "type": "object",
+  "properties": {
+    "priceList": {
+      "type": "array",
+      "items": {
+        "$ref": "domain/price-list-item.json"
+      }
+    }
+  },
+  "required": ["priceList"],
+  "additionalProperties": false
+}

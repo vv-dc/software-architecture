@@ -1,5 +1,10 @@
 import 'dotenv/config';
-import { DatabaseConfig, ServerConfig } from '@shared/model/config';
+import { join } from 'path';
+import {
+  DatabaseConfig,
+  SchemaConfig,
+  ServerConfig,
+} from '@shared/model/config';
 
 export const config = {
   server: {
@@ -7,6 +12,9 @@ export const config = {
     host: process.env.HOST ?? '0.0.0.0',
     logger: true,
   } as ServerConfig,
+  api: {
+    priceListDelay: parseInt(process.env.PRICE_LIST_DELAY ?? '0', 10),
+  },
   database: {
     host: process.env.PG_HOST,
     port: parseInt(process.env.PG_PORT ?? '', 10),
@@ -14,4 +22,7 @@ export const config = {
     database: process.env.PG_DATABASE,
     password: process.env.PG_PASSWORD,
   } as DatabaseConfig,
+  schema: {
+    path: join(__dirname, '../', 'schema/'),
+  } as SchemaConfig,
 };

@@ -1,0 +1,13 @@
+{
+  "$id": "domain/product.json",
+  "type": "object",
+  "properties": {
+    "id": { "type": "integer" },
+    "name": { "type": "string" },
+    "externalName": { "type": "string" },
+    "price": { "type": "number" },
+    "description": { "type": "string" }
+  },
+  "required": ["id", "name", "price", "description"],
+  "additionalProperties": false
+}

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { ServerConfig, DatabaseConfig } from '@shared/model/config';
 
 export const config = {

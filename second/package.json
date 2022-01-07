@@ -9,6 +9,13 @@
     "start": "node -r ts-node/register -r tsconfig-paths/register ./build/second/src/server.js",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "yarn lint --fix",
+    "migrate:make": "knex migrate:make -x ts",
+    "migrate:latest": "knex migrate:latest",
+    "migrate:up": "knex migrate:up",
+    "migrate:down": "knex migrate:down",
+    "migrate:down-all": "knex migrate:rollback --all",
+    "seed:run": "knex seed:run",
+    "seed:make": "knex seed:make",
     "valid": "yarn build && yarn lint"
   },
   "dependencies": {
@@ -16,6 +23,7 @@
     "fastify": "^3.24.0",
     "fastify-autoload": "^3.9.0",
     "fastify-plugin": "^3.0.0",
+    "knex": "^0.95.15",
     "pg": "^8.7.1"
   },
   "devDependencies": {

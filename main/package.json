@@ -22,7 +22,8 @@
   "devDependencies": {
     "@types/node": "^16.11.6",
     "@types/pg": "^8.6.1",
-    "json-schema-to-typescript": "^10.1.5"
+    "json-schema-to-typescript": "^10.1.5",
+    "lorem-ipsum": "^2.0.4"
   },
   "dependencies": {
     "@types/node-cron": "^3.0.0",

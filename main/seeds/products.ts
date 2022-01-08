@@ -1,10 +1,10 @@
 import { Knex } from 'knex';
 
 export async function seed(knex: Knex): Promise<void> {
+  await knex('products').del();
+  await knex('suppliers').del();
   await knex('categories').del();
   await knex('countries').del();
-  await knex('suppliers').del();
-  await knex('products').del();
 
   const categoryIds = await knex('categories')
     .insert([{ name: 'beer' }, { name: 'wine' }, { name: 'liquor' }])

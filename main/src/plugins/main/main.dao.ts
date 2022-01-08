@@ -1,28 +1,24 @@
-import { DatabaseConnection } from '@shared/modules/database/model';
-import { WhereQuery } from '@shared/modules/database/model/where.model';
+import { DatabaseConnection } from '@shared/modules/database/model/connection';
+import { WhereQuery } from '@shared/modules/database/model/where';
 import { Builder } from '@shared/modules/database/builder';
-import { NumberQuery } from '@shared/modules/database/model/number-query.model';
-import { StringQuery } from '@shared/modules/database/model/string-query.model';
+import { Director } from '@shared/modules/database/director';
+import { objectToCamelCase } from '@shared/lib/case.utils';
+
 import { UpdateProductDto } from '@model/dto/update-product.dto';
 import { CreateProductDto } from '@model/dto/create-product.dto';
 import { Product } from '@model/domain/product';
-import { objectToCamelCase } from '@shared/lib/case.utils';
-
-type BuildEntry = [string, NumberQuery & StringQuery];
 
 export class MainDao {
   constructor(private db: DatabaseConnection) {}
 
   private buildQuery(query: WhereQuery<Product>): string {
-    const baseSql = this.db.select().from('products');
-    const builder = new Builder(baseSql);
+    const baseQuery = this.getProductBaseQuery();
 
-    for (const [column, filters] of Object.entries(query) as BuildEntry[]) {
-      builder
-        .includes(column, filters.includes)
-        .min(column, filters.min)
-        .max(column, filters.max)
-        .like(column, filters.like);
+    const builder = new Builder(baseQuery);
+    const director = new Director(builder);
+
+    for (const [column, params] of Object.entries(query)) {
+      director.buildQuery(`p.${column}`, params);
     }
 
     return builder.collect();
@@ -57,10 +53,6 @@ export class MainDao {
   async getProductById(id: number): Promise<Product> {
     const products = await this.getProductBaseQuery().where('p.id', id);
     return products[0];
-  }
-
-  async getAll(): Promise<Product[]> {
-    return this.getProductBaseQuery();
   }
 
   async deleteProductById(id: number): Promise<Product> {

@@ -1,4 +1,4 @@
-import { WhereQuery } from '@shared/modules/database/model/where.model';
+import { WhereQuery } from '@shared/modules/database/model/where';
 
 import { config } from '@config/config';
 import { SecondDao } from '@plugins/second/second.dao';

@@ -1,26 +1,22 @@
-import { DatabaseConnection } from '@shared/modules/database/model';
-import { WhereQuery } from '@shared/modules/database/model/where.model';
+import { DatabaseConnection } from '@shared/modules/database/model/connection';
+import { WhereQuery } from '@shared/modules/database/model/where';
 import { Builder } from '@shared/modules/database/builder';
 import { objectToCamelCase } from '@shared/lib/case.utils';
-import { Product } from '@model/domain/product';
-import { StringQuery } from '@model/domain/string-query';
-import { NumberQuery } from '@model/domain/number-query';
 
-type BuildEntry = [string, NumberQuery & StringQuery];
+import { Product } from '@model/domain/product';
+import { Director } from '@shared/modules/database/director';
 
 export class SecondDao {
   constructor(private db: DatabaseConnection) {}
 
   private buildQuery(query: WhereQuery<Product>): string {
-    const baseSql = this.db.select().from('products');
-    const builder = new Builder(baseSql);
+    const baseQuery = this.db('products').select();
 
-    for (const [column, filters] of Object.entries(query) as BuildEntry[]) {
-      builder
-        .includes(column, filters.includes)
-        .min(column, filters.min)
-        .max(column, filters.max)
-        .like(column, filters.like);
+    const builder = new Builder(baseQuery);
+    const director = new Director(builder);
+
+    for (const [column, params] of Object.entries(query)) {
+      director.buildQuery(column, params);
     }
 
     return builder.collect();

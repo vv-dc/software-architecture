@@ -1,9 +1,9 @@
 import { FastifyPluginAsync } from 'fastify';
 
 import { ProductParams } from '@model/api/product/product-params';
-import { ProductCreateBody } from '@model/api/product/product-create-body';
-import { ProductUpdateBody } from '@model/api/product/product-update-body';
 import { SearchQuery } from '@model/api/product/search-query';
+import { CreateProductDto } from '@model/dto/create-product.dto';
+import { UpdateProductDto } from '@model/dto/update-product.dto';
 
 export const mainRoutes: FastifyPluginAsync = async (fastify) => {
   const { mainService } = fastify;
@@ -12,7 +12,7 @@ export const mainRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'GET',
     url: '/search',
     schema: {
-      querystring: fastify.getSchema('api/product/search-query.json#'),
+      querystring: fastify.getSchema('search-query.api.json'),
       response: {
         200: fastify.getSchema('dto/products.dto.json'),
       },
@@ -28,7 +28,7 @@ export const mainRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'GET',
     url: '/products/:id',
     schema: {
-      params: fastify.getSchema('api/product/product-params.json'),
+      params: fastify.getSchema('product-params.api.json'),
       response: {
         200: fastify.getSchema('dto/product.dto.json'),
       },
@@ -44,7 +44,7 @@ export const mainRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'DELETE',
     url: '/products/:id',
     schema: {
-      params: fastify.getSchema('api/product/product-params.json'),
+      params: fastify.getSchema('product-params.api.json'),
     },
     handler: async (request, reply) => {
       const { id } = request.params;
@@ -53,7 +53,7 @@ export const mainRoutes: FastifyPluginAsync = async (fastify) => {
     },
   });
 
-  fastify.route<{ Params: ProductParams; Body: ProductUpdateBody }>({
+  fastify.route<{ Params: ProductParams; Body: UpdateProductDto }>({
     method: 'PUT',
     url: '/products/:id',
     schema: {
@@ -68,7 +68,7 @@ export const mainRoutes: FastifyPluginAsync = async (fastify) => {
     },
   });
 
-  fastify.route<{ Body: ProductCreateBody }>({
+  fastify.route<{ Body: CreateProductDto }>({
     method: 'POST',
     url: '/products',
     schema: {

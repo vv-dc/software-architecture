@@ -1,5 +1,5 @@
 {
-  "$id": "api/product/list-query.json",
+  "$id": "list-query.api.json",
   "type": "object",
   "properties": {
     "page": { "type": "number", "exclusiveMinimum": 0 }

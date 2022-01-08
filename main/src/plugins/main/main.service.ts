@@ -1,7 +1,8 @@
 import { schedule } from 'node-cron';
 import { EntityNotFound } from '@shared/modules/errors/abstract-errors';
 import { everyDayAt } from '@shared/lib/cron.utils';
-import { WhereQuery } from '@shared/modules/database/model/where.model';
+import { WhereQuery } from '@shared/modules/database/model/where';
+
 import { FirstService } from '@plugins/main/first/first.service';
 import { SecondService } from '@plugins/main/second/second.service';
 import { MainDao } from '@plugins/main/main.dao';

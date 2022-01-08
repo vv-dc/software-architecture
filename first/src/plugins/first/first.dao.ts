@@ -1,4 +1,4 @@
-import { DatabaseConnection } from '@shared/modules/database/model';
+import { DatabaseConnection } from '@shared/modules/database/model/connection';
 
 import { Product } from '@model/domain/product';
 import { PriceListItem } from '@model/domain/price-list-item';

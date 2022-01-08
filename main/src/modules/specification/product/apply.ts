@@ -1,5 +1,5 @@
 import { Product } from '@model/domain/product';
-import { ProductSpecificationMap } from '@modules/specification/product/model/specification-map.model';
+import { ProductSpecificationMap } from '@modules/specification/product/model/specification-map';
 
 export const applyProductSpecification = (
   items: Product[],

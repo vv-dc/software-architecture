@@ -2,7 +2,7 @@ import { SearchQueryDto } from '@model/dto/search-query.dto';
 import { StringQuery } from '@model/domain/string-query';
 import { NumberQuery } from '@model/domain/number-query';
 import { Product } from '@model/domain/product';
-import { ProductSpecificationMap } from '@modules/specification/product/model/specification-map.model';
+import { ProductSpecificationMap } from '@modules/specification/product/model/specification-map';
 import { TrueSpecification } from '@modules/specification/true.specification';
 import { MinSpecification } from '@modules/specification/min-specification';
 import { Specification } from '@modules/specification/model/specification';

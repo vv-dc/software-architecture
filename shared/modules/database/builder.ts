@@ -4,22 +4,24 @@ export class Builder {
   constructor(private query: Knex.QueryBuilder) {}
 
   min(column: string, value?: number): Builder {
-    if (value) this.query = this.query.where(column, '>=', value);
+    if (value !== undefined) this.query = this.query.where(column, '>=', value);
     return this;
   }
 
   max(column: string, value?: number): Builder {
-    if (value) this.query = this.query.where(column, '<=', value);
+    if (value !== undefined) this.query = this.query.where(column, '<=', value);
     return this;
   }
 
   includes(column: string, values?: (string | number)[]): Builder {
-    if (values) this.query = this.query.whereIn(column, values);
+    if (values !== undefined && values.length !== 0)
+      this.query = this.query.whereIn(column, values);
     return this;
   }
 
   like(column: string, value?: string): Builder {
-    if (value) this.query = this.query.where(column, 'ilike', `${value}%`);
+    if (value !== undefined)
+      this.query = this.query.where(column, 'ilike', `${value}%`);
     return this;
   }
 

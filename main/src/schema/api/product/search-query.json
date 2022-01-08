@@ -1,5 +1,5 @@
 {
-  "$id": "api/product/search-query.json",
+  "$id": "search-query.api.json",
   "type": "object",
   "properties": {
     "id": { "$ref": "domain/number-query.json" },

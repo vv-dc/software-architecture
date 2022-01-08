@@ -9,12 +9,13 @@ export const secondRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'GET',
     url: '/search',
     schema: {
-      querystring: fastify.getSchema('api/product/search-query.json#'),
+      querystring: fastify.getSchema('search-query.api.json'),
       response: {
         200: fastify.getSchema('dto/search.dto.json'),
       },
     },
     handler: async (request, reply) => {
+      const s = fastify.getSchema('search-query.json');
       const { query } = request;
       const products = await secondService.getProductsByQuery(query);
       reply.code(200).send(products);
@@ -25,7 +26,7 @@ export const secondRoutes: FastifyPluginAsync = async (fastify) => {
     method: 'GET',
     url: '/list',
     schema: {
-      querystring: fastify.getSchema('api/product/list-query.json'),
+      querystring: fastify.getSchema('list-query.api.json'),
       response: {
         200: fastify.getSchema('dto/list.dto.json'),
       },

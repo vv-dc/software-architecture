@@ -6,7 +6,7 @@ import { getDirectoryFilesSync } from '@shared/lib/file.utils';
 import { config } from '@config/config';
 
 const schema: FastifyPluginAsync = async (fastify) => {
-  const files = getDirectoryFilesSync(config.schema.path);
+  const files = getDirectoryFilesSync(config.schemas.path);
   for (const file of files) {
     const content = readFileSync(file, 'utf-8');
     fastify.addSchema(JSON.parse(content));

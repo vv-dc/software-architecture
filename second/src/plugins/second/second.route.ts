@@ -15,7 +15,6 @@ export const secondRoutes: FastifyPluginAsync = async (fastify) => {
       },
     },
     handler: async (request, reply) => {
-      const s = fastify.getSchema('search-query.json');
       const { query } = request;
       const products = await secondService.getProductsByQuery(query);
       reply.code(200).send(products);

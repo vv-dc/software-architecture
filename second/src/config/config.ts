@@ -19,8 +19,8 @@ export const config = {
     database: process.env.PG_DATABASE,
     password: process.env.PG_PASSWORD,
   } as DatabaseConfig,
-  schema: {
-    path: join(__dirname, '../', 'schema/'),
+  schemas: {
+    path: join(__dirname, '../', 'schemas/'),
   } as SchemaConfig,
   search: {
     pageSize: 5000,

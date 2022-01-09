@@ -10,7 +10,6 @@
       "@config/*": ["./src/config/*"],
       "@plugins/*": ["./src/plugins/*"],
       "@model/*": ["./src/model/*"],
-      "@schema/*": ["./src/schema/*"],
       "@shared/*": ["../shared/*"]
     }
   },

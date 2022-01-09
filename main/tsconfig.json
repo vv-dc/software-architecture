@@ -11,7 +11,6 @@
       "@plugins/*": ["./src/plugins/*"],
       "@model/*": ["./src/model/*"],
       "@shared/*": ["../shared/*"],
-      "@schema/*": ["./src/schema/*"],
       "@modules/*": ["./src/modules/*"]
     }
   },

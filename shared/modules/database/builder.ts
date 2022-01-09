@@ -25,7 +25,7 @@ export class Builder {
     return this;
   }
 
-  collect(): string {
-    return this.query.toQuery();
+  buildQuery(): Knex.QueryBuilder {
+    return this.query;
   }
 }

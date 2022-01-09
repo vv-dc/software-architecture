@@ -1,22 +1,25 @@
-import { SearchQueryDto } from '@model/dto/search-query.dto';
 import { Cache } from '@shared/modules/cache/model/cache';
 import { getRequest } from '@shared/lib/http.utils';
 
 import { config } from '@config/config';
+import { addProperty } from '@lib/object.utils';
 import { Product } from '@model/domain/product';
-import { ProductsDto } from '@model/dto/products.dto';
 import { ProductPageListDto } from '@model/dto/product-page-list.dto';
 import { ProductDto } from '@model/dto/product.dto';
+import { ProductListDto } from '@model/dto/product-list.dto';
+import { SearchQueryDto } from '@model/dto/search-query.dto';
 
-const { secondHost, secondCacheKey } = config.suppliers;
+const { host, cacheKey, origin } = config.suppliers.second;
 
 export class SecondService {
   constructor(private pagesCache: Cache) {}
 
   private async fetchProductList(page: number): Promise<ProductPageListDto> {
     try {
-      const url = `${secondHost}/api/public/list`;
-      return await getRequest<ProductPageListDto>(url, { page });
+      const url = `${host}/api/public/list`;
+      const dto = await getRequest<ProductPageListDto>(url, { page });
+      dto.products.forEach((item) => addProperty(item, 'origin', origin));
+      return dto;
     } catch (err) {
       return { products: [], last: true };
     }
@@ -24,10 +27,12 @@ export class SecondService {
 
   private async fetchProductsSearch(
     query: SearchQueryDto
-  ): Promise<ProductsDto> {
+  ): Promise<ProductListDto> {
     try {
-      const url = `${secondHost}/api/public/search`;
-      return await getRequest<ProductsDto>(url, query);
+      const url = `${host}/api/public/search`;
+      const dto = await getRequest<ProductListDto>(url, query);
+      dto.products.forEach((item) => addProperty(item, 'origin', origin));
+      return dto;
     } catch (err) {
       return { products: [] };
     }
@@ -39,7 +44,7 @@ export class SecondService {
   }
 
   async getProductsListAllPages(): Promise<ProductDto[]> {
-    const cached = this.pagesCache.get(secondCacheKey);
+    const cached = this.pagesCache.get(cacheKey);
     if (cached !== undefined) return cached;
 
     const allProducts: Product[] = [];
@@ -49,12 +54,12 @@ export class SecondService {
       if (record.last) break;
     }
 
-    this.pagesCache.set(secondCacheKey, allProducts);
+    this.pagesCache.set(cacheKey, allProducts);
     return allProducts;
   }
 
   async updateCache(): Promise<void> {
-    this.pagesCache.del(secondCacheKey);
+    this.pagesCache.del(cacheKey);
     await this.getProductsListAllPages();
   }
 }

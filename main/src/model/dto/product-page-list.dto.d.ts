@@ -1,8 +1,8 @@
 export interface ProductPageListDto {
   products: {
     id: number;
+    origin: string;
     name: string;
-    externalName: string;
     price: number;
     description?: string;
     category?: string;

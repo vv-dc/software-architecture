@@ -1,17 +1,20 @@
+import { Knex } from 'knex';
 import { DatabaseConnection } from '@shared/modules/database/model/connection';
 import { WhereQuery } from '@shared/modules/database/model/where';
 import { Builder } from '@shared/modules/database/builder';
 import { Director } from '@shared/modules/database/director';
-import { objectToCamelCase } from '@shared/lib/case.utils';
 
 import { UpdateProductDto } from '@model/dto/update-product.dto';
 import { CreateProductDto } from '@model/dto/create-product.dto';
 import { Product } from '@model/domain/product';
+import { config } from '@config/config';
+
+const { origin } = config.suppliers.main;
 
 export class MainDao {
   constructor(private db: DatabaseConnection) {}
 
-  private buildQuery(query: WhereQuery<Product>): string {
+  async getProductsByQuery(query: WhereQuery<Product>): Promise<Product[]> {
     const baseQuery = this.getProductBaseQuery();
 
     const builder = new Builder(baseQuery);
@@ -21,21 +24,15 @@ export class MainDao {
       director.buildQuery(`p.${column}`, params);
     }
 
-    return builder.collect();
-  }
-
-  async getProductsByQuery(query: WhereQuery<Product>): Promise<Product[]> {
-    const rawSql = this.buildQuery(query);
-    const rawResult = await this.db.raw<{ rows: Product[] }>(rawSql);
-    return rawResult.rows.map((obj) => objectToCamelCase(obj));
+    return builder.buildQuery();
   }
 
   private getProductBaseQuery() {
     return this.db
       .select<Product[]>([
         'p.id as id',
+        `'${origin}' as origin`,
         'p.name as name',
-        'p.external_name as externalName',
         'c.name as category',
         's.company_name as company',
         'p.price as price',

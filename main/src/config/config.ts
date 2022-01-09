@@ -1,11 +1,12 @@
+import { join } from 'path';
 import 'dotenv/config';
 import {
   DatabaseConfig,
   SchemaConfig,
   ServerConfig,
 } from '@shared/model/config';
+
 import { SuppliersConfig } from '@config/model/suppliers.config';
-import { join } from 'path';
 
 export const config = {
   server: {
@@ -25,9 +26,18 @@ export const config = {
     path: join(__dirname, '../', 'schemas/'),
   } as SchemaConfig,
   suppliers: {
-    firstHost: process.env.FIRST_SUPPLIER_HOST,
-    secondHost: process.env.SECOND_SUPPLIER_HOST,
-    firstCacheKey: 'first',
-    secondCacheKey: 'second',
+    first: {
+      host: process.env.FIRST_SUPPLIER_HOST,
+      cacheKey: 'first',
+      origin: 'FIRST',
+    },
+    second: {
+      host: process.env.SECOND_SUPPLIER_HOST,
+      cacheKey: 'second',
+      origin: 'SECOND',
+    },
+    main: {
+      origin: 'MAIN',
+    },
   } as SuppliersConfig,
 };

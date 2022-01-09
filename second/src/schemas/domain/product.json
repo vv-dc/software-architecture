@@ -3,11 +3,10 @@
   "type": "object",
   "properties": {
     "id": { "type": "integer" },
-    "externalName": { "type": "string" },
     "name": { "type": "string" },
     "price": { "type": "number" },
     "description": { "type": "string" }
   },
-  "required": ["id", "externalName", "name", "price"],
+  "required": ["id", "name", "price"],
   "additionalProperties": false
 }

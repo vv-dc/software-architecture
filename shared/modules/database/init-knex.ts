@@ -17,7 +17,8 @@ export const getKnexConfig = (dbConfig: DatabaseConfig): Knex.Config => {
     seeds: {
       directory: './seeds',
     },
-    wrapIdentifier: (value) => camelCaseToSnakeCase(value),
+    wrapIdentifier: (value) =>
+      value.startsWith("'") ? value : camelCaseToSnakeCase(value),
     postProcessResponse: (result) => objectToCamelCase(result),
   } as Knex.Config;
 };

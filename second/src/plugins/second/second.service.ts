@@ -1,8 +1,8 @@
 import { WhereQuery } from '@shared/modules/database/model/where';
+import { EntityNotFound } from '@shared/modules/errors/abstract-errors';
 
 import { config } from '@config/config';
 import { SecondDao } from '@plugins/second/second.dao';
-import { EntityNotFound } from '@shared/modules/errors/abstract-errors';
 import { SearchDto } from '@model/dto/search.dto';
 import { SearchQueryDto } from '@model/dto/search-query.dto';
 import { Product } from '@model/domain/product';

@@ -8,14 +8,14 @@ export class FirstDao {
 
   async getProductDetails(id: number): Promise<Product | undefined> {
     return this.db<Product>('products')
-      .select(['id', 'externalName', 'name', 'price', 'description'])
+      .select(['id', 'name', 'price', 'description'])
       .where({ id })
       .first();
   }
 
   async getPriceList(limit?: number): Promise<PriceListItem[]> {
     return this.db<PriceListItem>('products')
-      .select(['id', 'externalName', 'name', 'price'])
+      .select(['id', 'name', 'price'])
       .modify((query) => (limit ? query.limit(limit) : query));
   }
 }

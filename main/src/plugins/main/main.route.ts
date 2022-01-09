@@ -14,7 +14,7 @@ export const mainRoutes: FastifyPluginAsync = async (fastify) => {
     schema: {
       querystring: fastify.getSchema('search-query.api.json'),
       response: {
-        200: fastify.getSchema('dto/products.dto.json'),
+        200: fastify.getSchema('dto/product-list.dto.json'),
       },
     },
     handler: async (request, reply) => {

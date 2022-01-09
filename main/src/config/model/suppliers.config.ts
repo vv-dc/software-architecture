@@ -1,6 +1,15 @@
 export interface SuppliersConfig {
-  firstHost: string;
-  secondHost: string;
-  firstCacheKey: string;
-  secondCacheKey: string;
+  first: {
+    host: string;
+    cacheKey: string;
+    origin: string;
+  };
+  second: {
+    host: string;
+    cacheKey: string;
+    origin: string;
+  };
+  main: {
+    origin: string;
+  };
 }

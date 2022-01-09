@@ -10,10 +10,10 @@ import { buildProductSpecificationMap } from '@modules/specification/product/bui
 import { applyProductSpecification } from '@modules/specification/product/apply';
 import { SearchQueryDto } from '@model/dto/search-query.dto';
 import { Product } from '@model/domain/product';
-import { ProductsDto } from '@model/dto/products.dto';
 import { ProductDto } from '@model/dto/product.dto';
 import { UpdateProductDto } from '@model/dto/update-product.dto';
 import { CreateProductDto } from '@model/dto/create-product.dto';
+import { ProductListDto } from '@model/dto/product-list.dto';
 
 export class MainService {
   constructor(
@@ -22,7 +22,7 @@ export class MainService {
     private secondService: SecondService
   ) {}
 
-  async getProductsByQuery(query: SearchQueryDto): Promise<ProductsDto> {
+  async getProductsByQuery(query: SearchQueryDto): Promise<ProductListDto> {
     const products = await this.dao.getProductsByQuery(
       query as WhereQuery<Product>
     );

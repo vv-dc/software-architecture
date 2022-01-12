@@ -16,7 +16,7 @@
     "migrate:up": "knex migrate:up",
     "migrate:down": "knex migrate:down",
     "migrate:down-all": "knex migrate:rollback --all",
-    "seed:run": "knex seed:run",
+    "seed:run": "knex seed:run --specific",
     "seed:make": "knex seed:make",
     "compile-schemas": "json2ts --cwd src/schemas --bannerComment \"\" -i src/schemas -o src/model && yarn lint:fix"
   },

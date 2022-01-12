@@ -47,12 +47,12 @@ export class MainDao {
       .join('suppliers as s', 'p.supplier_id', 's.id');
   }
 
-  async getProductById(id: number): Promise<Product> {
+  async getProductById(id: number): Promise<Product | undefined> {
     const products = await this.getProductBaseQuery().where('p.id', id);
     return products[0];
   }
 
-  async deleteProductById(id: number): Promise<Product> {
+  async deleteProductById(id: number): Promise<Product | undefined> {
     const products = await this.db('products')
       .delete('id')
       .where({ id })
@@ -60,7 +60,10 @@ export class MainDao {
     return products[0];
   }
 
-  async updateProductById(id: number, dto: UpdateProductDto): Promise<Product> {
+  async updateProductById(
+    id: number,
+    dto: UpdateProductDto
+  ): Promise<Product | undefined> {
     const products = await this.db('products')
       .update(dto)
       .where({ id })

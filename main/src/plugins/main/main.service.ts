@@ -1,5 +1,8 @@
 import { schedule } from 'node-cron';
-import { EntityNotFound } from '@shared/modules/errors/abstract-errors';
+import {
+  EntityConflict,
+  EntityNotFound,
+} from '@shared/modules/errors/abstract-errors';
 import { everyDayAt } from '@shared/lib/cron.utils';
 import { WhereQuery } from '@shared/modules/database/model/where';
 
@@ -42,23 +45,36 @@ export class MainService {
   async getProductById(id: number): Promise<ProductDto> {
     const product = await this.dao.getProductById(id);
     if (!product) {
-      throw new EntityNotFound('Not found any products by id');
+      throw new EntityNotFound('Product does not exist');
     } else return product;
   }
 
   async deleteProductById(id: number): Promise<ProductDto> {
-    return this.dao.deleteProductById(id);
+    const product = await this.dao.deleteProductById(id);
+    if (product === undefined) {
+      throw new EntityNotFound('Product does not exist');
+    } else return product;
   }
 
   async updateProductById(
     id: number,
     dto: UpdateProductDto
   ): Promise<ProductDto> {
-    return this.dao.updateProductById(id, dto);
+    await this.getProductById(id); // it will throw
+    try {
+      const product = await this.dao.updateProductById(id, dto);
+      return product as ProductDto;
+    } catch (err) {
+      throw new EntityConflict('Unable to update product');
+    }
   }
 
   async createProduct(dto: CreateProductDto): Promise<ProductDto> {
-    return this.dao.createProduct(dto);
+    try {
+      return await this.dao.createProduct(dto);
+    } catch (err) {
+      throw new EntityConflict('Unable to create product');
+    }
   }
 
   async updateCache(): Promise<void> {

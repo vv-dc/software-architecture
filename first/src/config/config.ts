@@ -13,7 +13,7 @@ export const config = {
     logger: true,
   } as ServerConfig,
   api: {
-    priceListDelay: parseInt(process.env.PRICE_LIST_DELAY ?? '0', 10),
+    priceListDelay: 20e3, // 20 seconds
   },
   database: {
     host: process.env.PG_HOST,

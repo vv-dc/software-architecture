@@ -12,7 +12,7 @@ import { SearchQueryDto } from '@model/dto/search-query.dto';
 const { host, cacheKey, origin } = config.suppliers.second;
 
 export class SecondService {
-  constructor(private pagesCache: Cache) {}
+  constructor(private cache: Cache) {}
 
   private async fetchProductList(page: number): Promise<ProductPageListDto> {
     try {
@@ -43,23 +43,27 @@ export class SecondService {
     return products ?? [];
   }
 
-  async getProductsListAllPages(): Promise<ProductDto[]> {
-    const cached = this.pagesCache.get(cacheKey);
-    if (cached !== undefined) return cached;
-
+  private async cacheProductsListPages(): Promise<void> {
     const allProducts: Product[] = [];
+
     for (let page = 1; ; ++page) {
       const record = await this.fetchProductList(page);
       allProducts.push(...record.products);
       if (record.last) break;
     }
 
-    this.pagesCache.set(cacheKey, allProducts);
-    return allProducts;
+    this.cache.set(cacheKey, allProducts);
+  }
+
+  async getProductsListAllPages(): Promise<ProductDto[]> {
+    if (!this.cache.has(cacheKey)) {
+      await this.cacheProductsListPages();
+    }
+    return this.cache.get(cacheKey);
   }
 
   async updateCache(): Promise<void> {
-    this.pagesCache.del(cacheKey);
-    await this.getProductsListAllPages();
+    this.cache.del(cacheKey);
+    await this.cacheProductsListPages();
   }
 }

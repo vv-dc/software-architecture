@@ -25,6 +25,24 @@ export class MainService {
     private secondService: SecondService
   ) {}
 
+  // Laboratory work N2
+
+  // async getProductsByQuery(query: SearchQueryDto): Promise<ProductListDto> {
+  //   const products = await this.dao.getProductsByQuery(
+  //     query as WhereQuery<Product>
+  //   );
+  //
+  //   const firstList = await this.firstService.getProductsByQuery(query);
+  //   const secondList = await this.secondService.getProductsByQuery(query);
+  //
+  //   products.push(...firstList);
+  //   products.push(...secondList);
+  //
+  //   if (!products.length) {
+  //     throw new EntityNotFound('Not found any products by query');
+  //   } else return { products };
+  // }
+
   async getProductsByQuery(query: SearchQueryDto): Promise<ProductListDto> {
     const products = await this.dao.getProductsByQuery(
       query as WhereQuery<Product>

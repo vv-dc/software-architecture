@@ -25,22 +25,25 @@ export class FirstService {
     }
   }
 
-  async getPriceList(): Promise<ProductDto[]> {
-    const cached = this.cache.get(cacheKey);
-    if (cached !== undefined) return cached;
-
+  private async cachePriceList(): Promise<void> {
     const { priceList } = await this.fetchPriceList();
     this.cache.set(cacheKey, priceList);
-    return priceList;
+  }
+
+  async getPriceList(): Promise<ProductDto[]> {
+    if (!this.cache.has(cacheKey)) {
+      await this.cachePriceList();
+    }
+    return this.cache.get(cacheKey);
   }
 
   async updateCache(): Promise<void> {
     this.cache.del(cacheKey);
-    await this.getPriceList();
+    await this.cachePriceList();
   }
 
   async getProductsByQuery(query: SearchQueryDto): Promise<ProductDto[]> {
-    const rawProducts = await this.getPriceList();
+    const { priceList: rawProducts } = await this.fetchPriceList();
     const specificationMap = buildProductSpecificationMap(query);
     const products = applyProductSpecification(rawProducts, specificationMap);
     return products ?? [];

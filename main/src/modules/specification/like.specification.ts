@@ -6,6 +6,6 @@ export class LikeSpecification extends Specification<string> {
   }
 
   isSatisfiedBy(item: string): boolean {
-    return item.toLowerCase().startsWith(this.pattern.toLowerCase());
+    return item.toLowerCase().includes(this.pattern.toLowerCase());
   }
 }

@@ -21,7 +21,7 @@ export class Builder {
 
   like(column: string, value?: string): Builder {
     if (value !== undefined)
-      this.query = this.query.where(column, 'ilike', `${value}%`);
+      this.query = this.query.where(column, 'ilike', `%${value}%`);
     return this;
   }
 

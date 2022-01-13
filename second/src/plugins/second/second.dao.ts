@@ -25,6 +25,7 @@ export class SecondDao {
     return this.db
       .select<Product[]>('*')
       .from('products')
+      .orderBy('id')
       .offset((page - 1) * pageSize)
       .limit(pageSize);
   }
